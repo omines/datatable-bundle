@@ -110,6 +110,8 @@ class DataTable
     /** @var Instantiator */
     private $instantiator;
 
+    private $columnRenderer;
+
     /**
      * DataTable constructor.
      */
@@ -256,6 +258,16 @@ class DataTable
     public function isCallback(): bool
     {
         return (null === $this->state) ? false : $this->state->isCallback();
+    }
+
+    public function setColumnTheme(string $theme)
+    {
+        $this->columnRenderer = $this->renderer->getColumnRenderer($theme);
+    }
+
+    public function getColumnRenderer()
+    {
+        return $this->columnRenderer;
     }
 
     /**

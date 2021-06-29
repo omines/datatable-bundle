@@ -23,4 +23,6 @@ interface DataTableRendererInterface
      * Provides the HTML layout of the configured datatable.
      */
     public function renderDataTable(DataTable $dataTable, string $template, array $parameters): string;
+
+    public function getColumnRenderer($template): callable;
 }

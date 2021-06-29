@@ -48,4 +48,26 @@ class TwigRenderer implements DataTableRendererInterface
 
         return $this->twig->render($template, $parameters);
     }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getColumnRenderer($template): callable
+    {
+        $renderer = $this->twig->load($template);
+
+        return function ($column, $value, $context) use ($renderer) {
+            $params = [
+                '_column' => $column,
+                'value' => $value,
+                'context' => $context,
+            ];
+            $blockName = $column->getName() . '_column';
+            if ($renderer->hasBlock($blockName)) {
+                return $renderer->renderBlock($blockName, $params);
+            } else {
+                return $value;
+            }
+        };
+    }
 }
